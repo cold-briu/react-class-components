@@ -1,59 +1,85 @@
 // PROGRAMACIÓN ORIENTADA A OBJETOS
 // SE BASA EN PLANTILLAS LLAMADAS CLASES
 
-export class Persona {
-	// puede asignar propiedades del objeto
-	// primero ejecutan el constructor
-	constructor(_nombre, _edad) {
-		this.nombre = _nombre
-		this.edad = _edad
-	}
+import React, { useEffect, useState } from "react"
 
-	// Métodos del objeto
-	cumplirAños() {
-		this.edad = this.edad + 1
-		// this.edad += 1
-	}
+
+export const Persona = (props) => {
+	const [nombre] = useState(props.nombre)
+	const [edad, setEdad] = useState(props.edad)
+
+	const cumplirAños = () => setEdad(edad + 1)
+
+	useEffect(() => {
+		console.log(`${nombre} @ ${edad} > updated!`);
+	}, [edad])
+
+	return (
+		<div className="card">
+			<div className="card-header">
+				Persona
+			</div>
+			<div className="card-body">
+				<h5 className="card-title">{nombre}</h5>
+				<p className="card-text">{edad}</p>
+				<button
+					className="btn btn-primary"
+					onClick={cumplirAños}
+				>
+					cumple!
+				</button>
+			</div>
+		</div>
+	)
 }
 
-class Cantante extends Persona {
-	// Las propiedades también pueden venir inicializadas en la clase
-	discos = [];
+// export class Persona extends React.Component {
+// 	// puede asignar propiedades del objeto
+// 	// primero ejecutan el constructor
+// 	constructor(props) {
+// 		super(props)
+// 		this.state = {
+// 			nombre: props.nombre,
+// 			edad: props.edad
+// 		}
+// 	}
 
-	constructor(_nombre, _edad, _sello) {
-		super(_nombre, _edad)
-		this.disquera = _sello
-	}
+// 	componentDidMount = () => {
+// 		console.log(`3. ${this.state.nombre} ${this.state.edad} @ componentDidMount`);
+// 		console.log("");
 
-	sacarDisco(_nombreDisco) {
-		this.discos.push(
-			new Disco(
-				_nombreDisco,
-				this.disquera,
-				this.nombre
-			)
-		)
-	}
-}
+// 	}
 
-class Disco {
-	constructor(_nombreDisco, _sello, _artista) {
-		this.nombreDisco = _nombreDisco
-		this.sello = _sello
-		this.artista = _artista
-	}
-}
+// 	componentDidUpdate = () => {
+// 		console.log(`4. ${this.state.nombre} ${this.state.edad} @ componentDidUpdate`);
+// 		console.log("");
+// 	}
 
+// 	// Métodos del objeto
+// 	cumplirAños = () => {
+// 		this.setState({
+// 			edad: this.state.edad + 1
+// 		})
+// 	}
 
+// 	render() {
 
-// LAS CLASES SE INSTANCIAN CREANDO OBJETOS
-
-const badBunny = new Cantante("benito", 10, "sony")
-const RG4L = new Cantante("ñengo flow", 12, "universal")
-
-console.log(badBunny.nombre, badBunny.edad); // => "benito"
-
-badBunny.cumplirAños()
-badBunny.sacarDisco("un verano sin teléfono")
-
-console.log(badBunny.discos);  // => ["un verano..."]
+// 		return (
+// 			<div className="card">
+// 				<div className="card-header">
+// 					Persona
+// 				</div>
+// 				<div className="card-body">
+// 					<h5 className="card-title">{this.state.nombre}</h5>
+// 					<p className="card-text">{this.state.edad}</p>
+// 					<button
+// 						className="btn btn-primary"
+// 						onClick={this.cumplirAños}
+// 					>
+// 						cumple!
+// 					</button>
+// 				</div>
+// 			</div>
+// 		)
+// 	}
+// }
